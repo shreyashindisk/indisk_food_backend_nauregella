@@ -45,4 +45,27 @@ const login = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-module.exports = { register, login };
+
+const deleteUser = async (req, res) => {
+  try {
+    var { username, workingAt } = req.body;
+    username = username.trim();
+    workingAt = workingAt.trim();
+
+    const user = await User.findOneAndDelete({
+      username: username,
+      workingAt: workingAt,
+    });
+
+    if (user) {
+      res.status(200).json({ message: "User deleted successfully." });
+    }
+
+    res.status(400).json({ message: "User not found." });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+module.exports = { register, login, deleteUser };
