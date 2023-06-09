@@ -73,6 +73,34 @@ const getAllFoodWithCategory = async (category) => {
   }
 };
 
+const getAllFoodWithCategoryApp = async (req, res) => {
+  try {
+    var { category } = req.query;
+    category = category.trim().toLowerCase();
+    const food = await Food.find({ category: category });
+
+    if (!food) return res.status(400).json({ message: "Food not found." });
+
+    res.status(200).json(food);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const getAllFoodWithCategoryAppNames = async (req, res) => {
+  try {
+    var { category } = req.query;
+    category = category.trim().toLowerCase();
+    const food = await Food.find({ category: category }, { name: 1, image: 1 });
+
+    if (!food) return res.status(400).json({ message: "Food not found." });
+
+    res.status(200).json(food);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 const getAllFood = async (req, res) => {
   try {
     const food = await Food.find();
@@ -82,4 +110,10 @@ const getAllFood = async (req, res) => {
   }
 };
 
-module.exports = { createFood, getAllFoodWithCategory, getAllFood };
+module.exports = {
+  createFood,
+  getAllFoodWithCategory,
+  getAllFood,
+  getAllFoodWithCategoryApp,
+  getAllFoodWithCategoryAppNames,
+};

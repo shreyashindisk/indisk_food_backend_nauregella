@@ -9,6 +9,10 @@ const sideSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  number: {
+    type: Number,
+    required: false,
+  },
   pricesForDiffCombos: {
     type: Array,
     required: true,
