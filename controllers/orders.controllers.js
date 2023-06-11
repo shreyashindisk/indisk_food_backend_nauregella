@@ -331,4 +331,67 @@ const getTodaysTimedOrders = async (req, res) => {
   }
 };
 
-module.exports = { add, getTodaysTotalOrders, getTodaysTimedOrders };
+const getPaymentModes = async (req, res) => {
+  try {
+    var { date } = req.query;
+    var month = date.split("-")[1];
+    //add 0 to the month if it is less than 10
+    if (parseInt(month) < 10) {
+      month = "0" + month;
+    }
+    var day = date.split("-")[2];
+    //add 0 to the day if it is less than 10
+    if (parseInt(day) < 10) {
+      day = "0" + day;
+    }
+    var newDate = date.split("-")[0] + "-" + month + "-" + day;
+    const ordersForDay = await Order.find({ date: newDate }, { order: 1 });
+
+    // we have to find number of orders and amount in given time slots,
+    // time slots are 11-12, 12- 1, 1-2, 2-3, 3-4, 4-5, 5-6, 6-7, 7-8, 8-9, 9-10
+    // we will create an object with keys as time slots and values as number of orders and amount
+    var totalAmount = 0;
+    var diffPaymentModesOrdersAndAmountTotal = {
+      Card: { numberOfOrders: 0, amount: 0 },
+      "Mobile Pay": { numberOfOrders: 0, amount: 0 },
+      Cash: { numberOfOrders: 0, amount: 0 },
+      "Street Credit": { numberOfOrders: 0, amount: 0 },
+      "Gift Card": { numberOfOrders: 0, amount: 0 },
+    };
+
+    for (var i = 0; i < ordersForDay.length; i++) {
+      const order = ordersForDay[i].order;
+      var modeOfPaymentName = order.modeOfPaymentName;
+      const amount = order.totalAmount;
+      totalAmount = totalAmount + amount;
+      diffPaymentModesOrdersAndAmountTotal[modeOfPaymentName].numberOfOrders =
+        diffPaymentModesOrdersAndAmountTotal[modeOfPaymentName].numberOfOrders +
+        1;
+      diffPaymentModesOrdersAndAmountTotal[modeOfPaymentName].amount =
+        diffPaymentModesOrdersAndAmountTotal[modeOfPaymentName].amount + amount;
+    }
+
+    //convert the object to an array of objects
+    var diffPaymentModesOrdersAndAmountTotalArray = [];
+    for (var key in diffPaymentModesOrdersAndAmountTotal) {
+      diffPaymentModesOrdersAndAmountTotalArray.push({
+        mode: key,
+        orders: diffPaymentModesOrdersAndAmountTotal[key].numberOfOrders,
+        amount: diffPaymentModesOrdersAndAmountTotal[key].amount,
+      });
+    }
+    res
+      .status(200)
+      .json({ diffPaymentModesOrdersAndAmountTotalArray, totalAmount });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+module.exports = {
+  add,
+  getTodaysTotalOrders,
+  getTodaysTimedOrders,
+  getPaymentModes,
+};
