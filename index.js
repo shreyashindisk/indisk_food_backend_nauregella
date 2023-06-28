@@ -12,7 +12,7 @@ const ordersRouter = require("./routes/orders.routes.js");
 
 const app = express();
 
-const port = 4000;
+const port = 5000;
 var corsOptions = {
   origin: "*",
 };
@@ -28,7 +28,7 @@ app.use("/sides", sidesRouter);
 app.use("/orders", ordersRouter);
 
 mongoose.connect(
-  "mongodb+srv://shreyashbdhamane0:ZAWvzaohi8u9Rgta@cluster0.gow79nv.mongodb.net/?retryWrites=true&w=majority",
+  "mongodb+srv://shreyashbdhamane0:W36xTzVoJSpeluZJ@cluster0.ttrfz30.mongodb.net/?retryWrites=true&w=majority",
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,

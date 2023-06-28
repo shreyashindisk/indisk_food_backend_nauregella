@@ -6,8 +6,6 @@ const add = async (req, res) => {
     //get the date, day, month, year
     //get day name of the week, eg: Monday, Tuesday, etc.
 
-    console.log(req.body);
-
     var date = new Date();
     var days = [
       "Sunday",
