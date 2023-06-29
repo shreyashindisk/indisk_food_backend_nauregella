@@ -58,20 +58,10 @@ const getAllSides = async (req, res) => {
   }
 };
 
-const getAllSidesInternal = async (kitchen2) => {
+const getAllSidesInternal = async () => {
   try {
     var sides;
-    var kitchen = kitchen2.trim().toLowerCase();
-    if (kitchen === "central") {
-      sides = await Side.find({
-        kitchen: { $in: ["central", "both"] },
-      });
-    } else {
-      sides = await Side.find({
-        kitchen: { $in: ["sales", "both"] },
-      });
-    }
-
+    sides = await Side.find();
     if (!sides) throw new Error("Sides not found.");
 
     return sides;
