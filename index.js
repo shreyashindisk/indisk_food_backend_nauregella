@@ -10,6 +10,7 @@ const getInitialDataRouter = require("./routes/getInitialData.route.js");
 const sidesRouter = require("./routes/sides.router.js");
 const drinksRouter = require("./routes/drinks.router.js");
 const dessertsRouter = require("./routes/desserts.router.js");
+const curryRouter = require("./routes/curry.routes.js");
 const ordersRouter = require("./routes/orders.routes.js");
 
 const app = express();
@@ -29,6 +30,7 @@ app.use("/get_all", getInitialDataRouter);
 app.use("/sides", sidesRouter);
 app.use("/drinks", drinksRouter);
 app.use("/desserts", dessertsRouter);
+app.use("/curry", curryRouter);
 app.use("/orders", ordersRouter);
 
 mongoose.connect(
