@@ -12,6 +12,7 @@ const drinksRouter = require("./routes/drinks.router.js");
 const dessertsRouter = require("./routes/desserts.router.js");
 const curryRouter = require("./routes/curry.routes.js");
 const ordersRouter = require("./routes/orders.routes.js");
+const pricesRouter = require("./routes/prices.routes.js");
 
 const app = express();
 
@@ -32,6 +33,7 @@ app.use("/drinks", drinksRouter);
 app.use("/desserts", dessertsRouter);
 app.use("/curry", curryRouter);
 app.use("/orders", ordersRouter);
+app.use("/prices", pricesRouter);
 
 mongoose.connect(
   "mongodb+srv://shreyashbdhamane0:W36xTzVoJSpeluZJ@cluster0.ttrfz30.mongodb.net/?retryWrites=true&w=majority",
