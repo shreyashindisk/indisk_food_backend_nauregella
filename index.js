@@ -18,6 +18,7 @@ const cronRouter = require("./routes/cron.routes.js");
 const app = express();
 
 const port = 5000;
+
 var corsOptions = {
   origin: "*",
 };
@@ -26,6 +27,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use("/", cronRouter);
 app.use("/user", userRouter);
 app.use("/food", foodRouter);
 app.use("/get_all", getInitialDataRouter);
@@ -35,7 +37,6 @@ app.use("/desserts", dessertsRouter);
 app.use("/curry", curryRouter);
 app.use("/orders", ordersRouter);
 app.use("/prices", pricesRouter);
-app.use("/", cronRouter);
 
 mongoose.connect(
   "mongodb+srv://shreyashbdhamane0:W36xTzVoJSpeluZJ@cluster0.ttrfz30.mongodb.net/?retryWrites=true&w=majority",
