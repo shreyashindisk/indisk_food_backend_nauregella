@@ -1,6 +1,7 @@
 const { getAllFoodWithCategory } = require("../controllers/food.controller");
 const { getAllSidesInternal } = require("../controllers/sides.controller.js");
 const { getAllCurrysInternal } = require("../controllers/curry.controllers.js");
+conts {getAllTerminalIdsInternal} = require("../controllers/terminal.controllers.js");
 const {
   getAllPricesInternal,
 } = require("../controllers/prices.controllers.js");
@@ -19,9 +20,10 @@ const getInitialData = async (req, res) => {
     const desserts = await getAllDessertsInternal();
     const curries = await getAllCurrysInternal();
     const prices = await getAllPricesInternal();
+    const terminalId = await getAllTerminalIdsInternal();
     res
       .status(200)
-      .json({ curryRiceBowl, sides, drinks, desserts, curries, prices });
+      .json({ curryRiceBowl, sides, drinks, desserts, curries, prices, terminalId });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: error.message });

@@ -6,7 +6,7 @@ const terminalIdSchema = new mongoose.Schema({
     required: true,
   },
   terminalId: {
-    type: Number,
+    type: String,
     required: true,
   },
 });
